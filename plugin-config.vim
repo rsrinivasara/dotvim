@@ -147,6 +147,7 @@ let g:unite_source_rec_max_cache_files = 0
 call unite#custom#source('file_rec,file_rec/async,file_mru,file,buffer,grep',
             \ 'max_candidates', 0)
 
+hi UniteSelectedLine gui=NONE guifg=NONE guibg=#000000
 " Keep track of yanks
 let g:unite_source_history_yank_enable = 1
 " Prettier prompt

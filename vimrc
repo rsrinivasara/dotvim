@@ -7,7 +7,8 @@ if !has('gui_running')
     " All themes are installed by now
     syntax enable
     set background=dark
-    colorscheme atom-dark-256
+    " colorscheme atom-dark-256
+    colorscheme zenburn
 
     set fillchars+=vert:\|
     hi! VertSplit ctermfg=bg ctermbg=fg term=NONE

@@ -10,10 +10,10 @@ call plug#begin('~/.vim/plugged')
 let g:plug_url_format = 'https://github.com/%s.git'
 
 " file tree
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeTabsToggle', 'NERDTreeFind'] }
 
 " commenting
-Plug 'scrooloose/nerdcommenter', { 'on': 'NERDComAlignedComment' }
+Plug 'scrooloose/nerdcommenter'
 
 " fuzzy file open
 " Plug 'kien/ctrlp.vim'
@@ -45,6 +45,8 @@ Plug 'Indent-Guides'
 " color themes
 " Plug 'altercation/vim-colors-solarized'
 Plug 'gosukiwi/vim-atom-dark'
+Plug 'jnurmine/Zenburn'
+Plug 'junegunn/seoul256.vim'
 Plug 'godlygeek/csapprox'
 
 " syntax support
@@ -59,5 +61,6 @@ Plug 'myusuf3/numbers.vim'
 
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/neomru.vim'
 
 call plug#end()

@@ -21,12 +21,6 @@ nmap <leader>p :NERDTreeFind<CR>
 let g:nerdtree_tabs_open_on_gui_startup = 0
 
 "------------------------------------------------------------------------------
-" nerdcommenter
-" ,/ to invert comment on the current line/selection
-nmap <leader>/ :call NERDComment(0, "invert")<cr>
-vmap <leader>/ :call NERDComment(0, "invert")<cr>
-
-"------------------------------------------------------------------------------
 " yankring
 let g:yankring_replace_n_pkey = '<leader>['
 let g:yankring_replace_n_nkey = '<leader>]'
@@ -47,19 +41,16 @@ nmap <leader>f :let @/="\\<<C-R><C-W>\\>"<CR>:set hls<CR>:silent Ggrep -w "<C-R>
 :vmap <leader>f y:let @/=escape(@", '\\[]$^*.')<CR>:set hls<CR>:silent Ggrep -F "<C-R>=escape(@", '\\"#')<CR>"<CR>:ccl<CR>:cw<CR><CR>
 
 "------------------------------------------------------------------------------
-" Ack
-" ,g for Ack
-" ,k for Ack current word
-" TODO: make it smart and combine it
-nmap <leader>g :Ack<space>
-nmap <leader>k :let @/="\\<<C-R><C-W>\\>"<CR>:set hls<CR>:Ack "<C-R><C-W>"<space>
-
-"------------------------------------------------------------------------------
 " indent-guides
 let g:indent_guides_start_level = 2
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_color_change_percent = 5
+if !has('gui_running')
+    let g:indent_guides_auto_colors = 0
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=236
+    autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=238
+end
 
 "------------------------------------------------------------------------------
 " Gundo
@@ -172,6 +163,7 @@ if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nocolor --nogroup --hidden --ignore-case --ignore tags'
   let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --ignore ".hg" --ignore ".svn" --ignore ".git" --ignore ".bzr" --hidden -g ""'
 elseif executable('ack-grep')
   let g:unite_source_grep_command = 'ack-grep'
   let g:unite_source_grep_default_opts =
@@ -215,8 +207,7 @@ nnoremap <silent><leader>lq :call g:DoUniteFuzzyQuickfix()<CR>
 nnoremap <silent><leader>lQ :call g:DoUniteNonFuzzyQuickfix()<CR>
 nnoremap <silent><leader>le :<C-u>Unite -buffer-name=files file_mru bookmark<CR>
 nnoremap <silent><leader>lE :<C-u>Unite -buffer-name=files file_mru bookmark file_rec/async file/new<CR>
-nnoremap <silent><leader>lB :<C-u>Unite -buffer-name=buffers buffer<CR>
-nnoremap <silent><leader>lb :<C-u>Unite -buffer-name=buffers buffer_tab<CR>
+nnoremap <silent><leader>lb :<C-u>Unite -buffer-name=buffers buffer<CR>
 nnoremap <silent><leader>ly :<C-u>Unite -buffer-name=yanks history/yank<CR>
 nnoremap <silent><leader>lc :<C-u>Unite -buffer-name=changes change<CR>
 nnoremap <silent><leader>lj :<C-u>Unite -buffer-name=jumps jump<CR>
@@ -235,7 +226,7 @@ nnoremap <silent><leader>li :<C-u>Unite -buffer-name=included_tags tag/include<C
 nnoremap <silent><leader>ld :<C-u>Unite -buffer-name=change-cwd -default-action=lcd directory_mru directory<CR>
 nnoremap <silent><leader>l, :<C-u>UniteResume<CR>
 nnoremap <silent><leader>lv :<C-u>UniteResume<CR>
-nnoremap <silent><leader>lV :<C-u>UniteResume 
+nnoremap <silent><leader>lV :<C-u>UniteResume
 
 nnoremap <leader>lS :<C-u>UniteSessionSave 
 

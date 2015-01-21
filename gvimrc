@@ -6,7 +6,8 @@ set guifont=Inconsolata-g\ for\ Powerline\ 10
 " set guifont=Bitstream\ Vera\ Sans\ Mono\ 12
 
 set background=dark
-colorscheme atom-dark
+" colorscheme atom-dark
+colorscheme zenburn
 
 set fillchars+=vert:\|
 hi vertsplit guifg=bg guibg=fg

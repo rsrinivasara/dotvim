@@ -21,16 +21,83 @@ nmap <leader>p :NERDTreeFind<CR>
 let g:nerdtree_tabs_open_on_gui_startup = 0
 
 "------------------------------------------------------------------------------
-" yankring
-let g:yankring_replace_n_pkey = '<leader>['
-let g:yankring_replace_n_nkey = '<leader>]'
-" ,y to show the yankring
-nmap <leader>y :YRShow<cr>
-" put the yankring_history file in ~/.backup
-let g:yankring_history_dir = '~/.backup'
+" ctrlP
+let g:ctrlp_map = '<leader>,'
+let g:ctrlp_cmd = 'CtrlP'
+
+nmap <leader>. :CtrlPClearCache<cr>:CtrlP<cr>
+nmap <leader>l :CtrlPLine<cr>
+nmap <leader>b :CtrlPBuff<cr>
+nmap <leader>m :CtrlPBufTag<cr>
+nmap <leader>M :CtrlPBufTagAll<cr>
+
+let g:ctrlp_clear_cache_on_exit = 1
+" ctrlp leaves stale caches behind if there is another vim process runnin
+" which didn't use ctrlp. so we clear all caches on each new vim invocation
+
+if ! &diff
+    cal ctrlp#clra()
+endif
+
+let g:ctrlp_max_height = 40
+
+let g:ctrlp_working_path_mode = 'ra'
+
+" show on top
+"let g:ctrlp_match_window_bottom = 0
+"let g:ctrlp_match_window_reversed = 0
+
+" jump to buffer in the same tab if already open
+let g:ctrlp_switch_buffer = 1
+
+let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\.git$\|\.hg$\|\.svn$|aix-visualage-powerpc$|solaris-sunwspro-sparc$',
+        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$|\.o$|\.a$' }
+
+" open multiple files with <c-z> to mark and <c-o> to open. v - opening in
+" vertical splits; j - jump to first open buffer; r - open first in current buffer
+let g:ctrlp_open_multiple_files = 'vjr'
+
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'mixed', 'line']
+let g:ctrlp_buftag_ctags_bin = '/opt/swt/install/ctags-5.8/bin/ctags'
+
+" Match files after 250ms pause
+let g:ctrlp_lazy_update = 350
+
+" Set no file limit, we are building a big project
+let g:ctrlp_max_files = 0
+
+" If ag is available use it as filename list generator instead of 'find'
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+else
+    " if in git repo - use git file listing command, should be faster
+    " let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files --exclude-standard -cod']
+    let g:ctrlp_user_command = {
+                \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': 'find %s -type f'
+                \ }
+endif
+
+"------------------------------------------------------------------------------
+" vim-cpp-enhanced-highlight
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_class_scope_highlight = 1
+
+"------------------------------------------------------------------------------
+" Extradite
+nmap <leader>ge :Extradite<CR>
 
 "------------------------------------------------------------------------------
 " Fugitive
+nmap <leader>gb :Gblame<CR>
+nmap <leader>gs :Gstatus<CR>
+nmap <leader>gc :Gcommit<CR>
+
 " ,g for Ggrep
 " nmap <leader>g :silent Ggrep<space>
 
@@ -60,6 +127,7 @@ let g:gundo_close_on_revert = 1
 "------------------------------------------------------------------------------
 " Airline
 let g:airline_powerline_fonts=1
+let g:airline#extensions#tagbar#enabled = 0
 " let g:airline_theme='base16'
 
 "------------------------------------------------------------------------------
@@ -75,12 +143,25 @@ nnoremap <leader>t :TagbarToggle<CR>
 "------------------------------------------------------------------------------
 " Ycm
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
-" let g:ycm_seed_identifiers_with_syntax = 1
-nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_path_to_python_interpreter = '/usr/bin/python2.7'
-let g:ycm_server_log_level = 'info'
+let g:ycm_server_log_level = 'debug'
 let g:pymode_breakpoint = 0
+let g:ycm_complete_in_comments = 1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_always_populate_location_list = 1
 let g:pymode_rope_vim_completion = 0
+
+nnoremap <leader>j :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"------------------------------------------------------------------------------
+" Rope plugin
+" Disabling it as it conflicts with YCM
+let g:pymode_rope = 0
 
 "------------------------------------------------------------------------------
 " Ultisnips
@@ -218,8 +299,9 @@ nnoremap <silent><leader>lo :<C-u>Unite -buffer-name=outline outline<CR>
 nnoremap <silent><leader>la :<C-u>Unite -buffer-name=outline -vertical outline<CR>
 nnoremap <silent><leader>ll :<C-u>Unite -buffer-name=line line<CR>
 nnoremap <silent><leader>lw :<C-u>Unite -buffer-name=location_list location_list<CR>
-nnoremap <silent><leader>l* :<C-u>UniteWithCursorWord -buffer-name=line line<CR>
-nnoremap <silent><leader>lg :<C-u>Unite -buffer-name=grep grep<CR>
+" nnoremap <silent><leader>l* :<C-u>UniteWithCursorWord -buffer-name=line line<CR>
+nnoremap <silent><leader>l* :<C-u>UniteWithCursorWord -buffer-name=grep grep:<CR>
+nnoremap <silent><leader>lg :<C-u>UniteWithCursorWord -buffer-name=grep grep:!<CR>
 nnoremap <silent><leader>ls :<C-u>Unite session<CR>
 nnoremap <silent><leader>lt :<C-u>Unite -buffer-name=tags tag tag/file<CR>
 nnoremap <silent><leader>li :<C-u>Unite -buffer-name=included_tags tag/include<CR>
@@ -228,7 +310,7 @@ nnoremap <silent><leader>l, :<C-u>UniteResume<CR>
 nnoremap <silent><leader>lv :<C-u>UniteResume<CR>
 nnoremap <silent><leader>lV :<C-u>UniteResume
 
-nnoremap <leader>lS :<C-u>UniteSessionSave 
+nnoremap <leader>lS :<C-u>UniteSessionSave
 
 function! s:unite_my_settings()
   "Don't add parens to my filters

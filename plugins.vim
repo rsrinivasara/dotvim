@@ -16,16 +16,19 @@ Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeTabsToggle', 'NE
 Plug 'scrooloose/nerdcommenter'
 
 " fuzzy file open
-" Plug 'kien/ctrlp.vim'
+Plug 'kien/ctrlp.vim'
 
 " code completion
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
-" snippet engine
-Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips', { 'on': [] }
+Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
 
-" Yank ring browser
-Plug 'YankRing.vim'
+augroup load_us_ycm
+ autocmd!
+ autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+                     \| call youcompleteme#Enable() | autocmd! load_us_ycm
+augroup END
 
 " git integration
 Plug 'tpope/vim-fugitive'
@@ -53,14 +56,14 @@ Plug 'godlygeek/csapprox'
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " visual undo tree
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 Plug 'derekwyatt/vim-fswitch'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'myusuf3/numbers.vim'
 
-Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Shougo/neomru.vim'
+Plug 'Shougo/unite.vim'
 
 call plug#end()

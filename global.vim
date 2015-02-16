@@ -22,6 +22,7 @@ set numberwidth=3       " number of culumns for line numbers
 set nowrap              " Do not wrap words (view)
 set showcmd             " Show (partial) command in status line.
 set showmode            " always show what mode we're currently editing in
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%)
 set ruler               " line and column number of the cursor position
 set wildmenu            " make tab completion for files/buffers act like bash
 set wildmode=longest,list,full  " Use readline-like tab completion.

@@ -144,7 +144,7 @@ nnoremap <leader>t :TagbarToggle<CR>
 " Ycm
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_path_to_python_interpreter = '/usr/bin/python2.7'
+" let g:ycm_server_python_interpreter = '/usr/local/bin/python'
 let g:ycm_server_log_level = 'debug'
 let g:pymode_breakpoint = 0
 let g:ycm_complete_in_comments = 1

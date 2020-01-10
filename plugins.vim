@@ -21,12 +21,12 @@ Plug 'kien/ctrlp.vim'
 " code completion
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --clang-completer --system-libclang' }
 
-Plug 'SirVer/ultisnips', { 'on': [] }
+" Plug 'SirVer/ultisnips', { 'on': [] }
 Plug 'Valloric/YouCompleteMe', { 'on': [], 'do': './install.sh --clang-completer --system-libclang' }
 
 augroup load_us_ycm
  autocmd!
- autocmd InsertEnter * call plug#load('ultisnips', 'YouCompleteMe')
+ autocmd InsertEnter * call plug#load('YouCompleteMe')
                      \| call youcompleteme#Enable() | autocmd! load_us_ycm
 augroup END
 
@@ -43,7 +43,7 @@ Plug 'scrooloose/syntastic'
 Plug 'bling/vim-airline'
 
 " plugin for visually displaying indent levels
-Plug 'Indent-Guides'
+" Plug 'Indent-Guides'
 
 " color themes
 " Plug 'altercation/vim-colors-solarized'

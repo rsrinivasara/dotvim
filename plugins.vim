@@ -51,6 +51,7 @@ Plug 'gosukiwi/vim-atom-dark'
 Plug 'jnurmine/Zenburn'
 Plug 'junegunn/seoul256.vim'
 Plug 'godlygeek/csapprox'
+Plug 'altercation/vim-colors-solarized'
 
 " syntax support
 Plug 'octol/vim-cpp-enhanced-highlight'
